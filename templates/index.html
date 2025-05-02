@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Welcome to Blaq Feather Tattoos and Piercings Studio</h1>
+            <p class="hero-subtitle">Your journey to unique, personalized tattoos &/ piercings starts here. Let's create a design that tells your story.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('contact') }}" class="btn-primary">Book Your Session</a>
+                <a href="#explore" class="btn-secondary">Explore My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="explore" class="about-preview">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>BLAQfeather Tattoos was established in 2017 by the tattoo artist, Payne. Payne, having always had a deep appreciation of art, developed a fascination for art on skin, and this grew into a love of tattoos. That love is what drives BLAQfeather to provide high-quality services to all its clients.</p>
+            <a href="{{ url_for('about') }}" class="btn-secondary">Read Our Story</a>
+        </div>
+    </section>
+
+    <section class="portfolio-preview">
+        <div class="container">
+            <h2>Our Portfolio</h2>
+            <p>Check out some of my latest work, and get inspired for your own tattoo design.</p>
+            <a href="{{ url_for('portfolio') }}" class="btn-secondary">View Portfolio</a>
+        </div>
+    </section>
+
+    <section class="testimonials-preview">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <p>Discover the experiences of people who have trusted me with their tattoos. Their stories are a testament to the passion I put into every piece.</p>
+            <a href="{{ url_for('testimonials') }}" class="btn-secondary">See Testimonials</a>
+        </div>
+    </section>
+{% endblock %}

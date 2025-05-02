@@ -1,0 +1,699 @@
+/* Hero Section */
+.hero {
+    background: url('/static/images/hero-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 20px; /* Increase padding for better spacing */
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero .btn-primary,
+.hero .btn-secondary {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Remove hover effect */
+.hero .btn-primary:hover,
+.hero .btn-secondary:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Section Style */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+section p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Button Styles */
+.btn-secondary {
+    background-color: #fff;
+    color: #333;
+    padding: 12px 30px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Container Style */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* General Layout Fix */
+section {
+    background-color: #f9f9f9;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    section h2 {
+        font-size: 28px;
+    }
+
+    section p {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Dark background */
+    color: #d1d1d1; /* Light grey text */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Container for all sections */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Styling for headings */
+h1, h2 {
+    color: #003366; /* Dark blue for headings */
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Section with padding and a dark background */
+.section {
+    padding: 40px 0;
+    margin: 20px 0;
+    background-color: #333333; /* Dark grey background for sections */
+    border-radius: 10px;
+}
+
+/* Styling for paragraph text */
+p {
+    color: #c4c4c4; /* Light grey text */
+    font-size: 1.2rem;
+    text-align: justify;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+/* Link styling */
+a {
+    color: #003366; /* Dark blue for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0099cc; /* Lighter blue on hover */
+    text-decoration: underline;
+}
+
+/* Styling for the navbar */
+nav {
+    background-color: #222222; /* Black background for navbar */
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+nav ul li a {
+    color: #d1d1d1; /* Light grey text for navbar */
+    font-size: 1.1rem;
+    padding: 8px 15px;
+}
+
+nav ul li a:hover {
+    color: #003366; /* Dark blue on hover */
+}
+
+/* Add a fade-in effect when loading content */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Hover animation for buttons */
+.cta-button {
+    display: inline-block;
+    background-color: #003366; /* Dark blue for buttons */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0099cc; /* Lighter blue on hover */
+    transform: translateY(-5px); /* Button moves up slightly */
+}
+
+/* Animations for section headings */
+@keyframes slideIn {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+h2 {
+    animation: slideIn 1s forwards;
+}
+
+/* Styling for footer */
+footer {
+    background-color: #222222;
+    color: #d1d1d1;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Smooth transitions for hover effects */
+section {
+    transition: background-color 0.5s ease;
+}
+
+/* Booking Form Styles */
+.booking-form {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+.booking-form h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.booking-form .intro-text {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.booking-form .form-group {
+    margin-bottom: 20px;
+}
+
+.booking-form label {
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.booking-form input,
+.booking-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.booking-form textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+.booking-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.booking-form button:hover {
+    background-color: #555;
+}
+
+.booking-form .form-group input:focus,
+.booking-form .form-group textarea:focus {
+    border-color: #000;
+    outline: none;
+}
+
+.booking-form input::placeholder,
+.booking-form textarea::placeholder {
+    color: #888;
+}
+
+/* Modern Booking Form Styles */
+.booking-section {
+    padding: 60px 0;
+    background: url('/static/images/solved.jpg') no-repeat center center;
+    background-size: 375% 200%;
+    position: relative;
+    min-height: calc(100vh - 200px);
+    color: #fff;
+}
+
+.booking-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);  /* Dark overlay */
+}
+
+.booking-section .container {
+    position: relative;
+    z-index: 1;  /* Place content above overlay */
+}
+
+.booking-section h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.booking-subtitle {
+    color: #888;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.modern-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #2a2a2a;  /* Lighter background */
+    border: 1px solid #333;  /* Subtle border */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modern-form .form-group {
+    margin-bottom: 20px;
+}
+
+.modern-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.modern-form input,
+.modern-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: #3a3a3a;  /* Lighter input fields */
+    border: 1px solid #444;
+    color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.modern-form input:focus,
+.modern-form textarea:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.modern-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.recaptcha-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.modern-form .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Date input specific styles */
+.modern-form input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #D3D3D3; /* Light footer background */
+    color: #333;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-left p {
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.social-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.social-links li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.social-links li a:hover {
+    color: #4CAF50; /* Green color on hover */
+}
+
+/* Mobile Responsiveness for Footer */
+@media screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-right {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .social-links li a {
+        font-size: 14px;
+    }
+}
+
+/* Thank You Page Styles */
+.thank-you {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1a1a1a; /* Dark background to match the site's color scheme */
+}
+
+.thank-you-container {
+    text-align: center;
+    background-color: #333; /* Dark background for the container */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px; /* Center content and restrict width */
+}
+
+.thank-you-container h1 {
+    font-size: 32px;
+    color: #fff; /* White text for the heading */
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.thank-you-container p {
+    font-size: 18px;
+    color: #c4c4c4; /* Light grey text for the paragraph */
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+.back-home-button {
+    text-decoration: none;
+    background-color: #003366; /* Dark blue background for the button */
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-home-button:hover {
+    background-color: #0099cc; /* Lighter blue on hover */
+    transform: translateY(-5px); /* Slight hover effect */
+}
+
+/* Add a fade-in effect to the page */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .thank-you-container {
+        padding: 30px;
+        max-width: 90%; /* Ensure the container is responsive */
+    }
+
+    .thank-you-container h1 {
+        font-size: 28px;
+    }
+
+    .thank-you-container p {
+        font-size: 16px;
+    }
+
+    .back-home-button {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}
+
+/* General Section Styling for pages */
+section {
+    position: relative; /* So we can position the overlay */
+    padding: 250px 20px; /* Adjust padding as needed */
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Add specific background images for each page */
+.hero {
+    min-height: 400px; /* Adjust as needed */
+    position: relative;
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.about-header {
+    margin-top: 0; /* Remove any top margin */
+    padding-top: 10px; /* Add minimal padding if needed */
+}
+
+.about-section {
+    background-image: url('/static/images/solved.jpg')!important;
+    background-size: 375% 200%; /* Stretches image to fill section */
+    background-repeat: no-repeat;
+    min-height: 100vh; 
+    padding-top: 20px; /* Reduce padding at the top of the section */
+    margin-top: 0; /* Remove any margin above the section */
+}
+
+.portfolio-content {
+    background-image: url('/static/images/solved.jpg')!important;
+    background-size: 375% 200%; /* Stretches image to fill section */
+    background-repeat: no-repeat;
+    min-height: 100vh; 
+    margin-top: 0; /* Remove any margin above the section */
+    padding-top: 20px; /* Reduce padding at the top of the section */
+}
+
+.testimonials-section {
+    background-image: url('/static/images/solved.jpg'); /* Adjust path if needed */
+    background-size: 375% 200%; /* Ensures it covers the section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    color: white; /* Ensures text is readable */
+    margin-top: 0; /* Remove any margin above the section */
+    padding-top: 20px; /* Reduce padding at the top of the section */
+}
+
+.contact-info {
+    background-image: url('/static/images/solved.jpg')!important; /* Adjust path if needed */
+    background-size: 375% 200%; /* Ensures it covers the section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    color: white; /* Ensures text is readable */
+    margin-top: 0; /* Remove any margin above the section */
+    padding-top: 20px; /* Reduce padding at the top of the section */
+}
+
+.about-header {
+    margin-top: 20px; /* Adjust this value to reduce the white space */
+    /* If padding is causing the issue, adjust padding-top instead */
+}
+
+.about-preview, .portfolio-preview, .testimonials-preview {
+    padding: 60px 20px;
+    margin-bottom: 40px;
+    background-color: #222; /* Darker background for contrast */
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.about-preview h2, .portfolio-preview h2, .testimonials-preview h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.about-preview p, .portfolio-preview p, .testimonials-preview p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        padding: 50px 10px; /* Adjust padding for smaller screens */
+    }
+
+    section h1 {
+        font-size: 28px; /* Make headings a little smaller on mobile */
+    }
+
+    section p {
+        font-size: 16px; /* Adjust text size for readability */
+    }
+}
+
+
+
+
+
+
+

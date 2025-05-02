@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tattoo Artist{% endblock %}</title>
+    
+    <!-- Link to your CSS file in the static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .logo {
+            height: 50px;  /* Increased from 40px */
+            width: auto;
+            margin: 5px 15px;
+            vertical-align: middle;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 8px;  /* Slightly increased padding to accommodate larger logo */
+            background-color: #000000;  /* Black background */
+        }
+
+        nav ul {
+            margin-left: 45px;  /* Add space between logo and nav items */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <img src="{{ url_for('static', filename='images/your-logo.png') }}" alt="Logo" class="logo">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+            <li><a href="{{ url_for('booking') }}">Book a Session</a></li>
+            <li><a href="{{ url_for('testimonials') }}">Testimonials</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Specific Content Block -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>&copy; 2025 Tattoo Artist | All Rights Reserved</p>
+            </div>
+            <div class="footer-right">
+                <ul class="social-links">
+                    <li><a href="https://www.facebook.com/profile.php?id=100064147891101" target="_blank" title="Facebook">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/blaqfeather5/?hl=en" target="_blank" title="Instagram">Instagram</a></li>
+                    <li><a href="https://www.tiktok.com/@blaqfeather" target="_blank" title="Tik Tok">Tik Tok</a></li>
+                    <li><a href="https://wa.me/+27677292036" target="_blank" title="Whatsapp">Whatsapp</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

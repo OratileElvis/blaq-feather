@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Book a Session - Tattoo Artist{% endblock %}
+
+{% block content %}
+    <section class="booking-section">
+        <div class="container">
+            <h1>Book Your Session</h1>
+            <p class="booking-subtitle">Start your tattoo journey with us</p>
+            
+            <form method="POST" class="modern-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Preferred Date</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Ideas (Optional)</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Book Now</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
