@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import time
+import sys  # Moved import here
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -63,7 +64,6 @@ def init_db():
             conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
             conn.commit()
     except Exception as e:
-        import sys
         print(f"Error ensuring 'approved' column in reviews: {e}", file=sys.stderr)
         raise
     # Add reset_token and reset_token_expiry to admin if not exists
