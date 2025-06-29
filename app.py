@@ -77,8 +77,8 @@ def init_db():
         conn2.execute('ALTER TABLE admin ADD COLUMN reset_token_expiry INTEGER')
     except Exception:
         pass
-    conn.close()
-    conn2.close()
+    
+    
 
 def debug_print_review_columns():
     conn = get_db()
