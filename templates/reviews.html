@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Reviews - Tattoo Artist{% endblock %}
+
+{% block content %}
+<div style="max-width:700px;margin:40px auto;" aria-label="Reviews section" role="region">
+    <h1 style="color:#fff;text-align:center;">Leave a Review</h1>
+    <form method="post" action="{{ url_for('add_client_review') }}" aria-label="Leave a Review" style="margin-bottom:2.5rem; background:rgba(255,255,255,0.08); padding:2rem; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,0.10);">
+        {{ csrf_token() }}
+        <label for="author" style="color:#fff;">Your Name</label>
+        <input type="text" id="author" name="author" placeholder="Your Name" required style="width:100%;margin-bottom:1rem;padding:0.75rem;border-radius:8px;border:none;">
+        <label for="text" style="color:#fff;">Your Review</label>
+        <textarea id="text" name="text" placeholder="Your review..." required style="width:100%;margin-bottom:1rem;padding:0.75rem;border-radius:8px;border:none;min-height:80px;"></textarea>
+        <button type="submit" style="width:100%;padding:0.75rem;background:#2057a7;color:#fff;border:none;border-radius:8px;font-weight:bold;letter-spacing:1px;transition:background 0.2s;">Submit Review</button>
+    </form>
+    <h2 style="color:#fff;text-align:center;">What Clients Say</h2>
+    <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        {% for review in reviews %}
+            <div style="background:rgba(255,255,255,0.10);border-radius:14px;box-shadow:0 2px 16px rgba(0,0,0,0.10);padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;">
+                <div style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:#2057a7;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;font-weight:bold;">
+                    {{ review.author[0]|upper }}
+                </div>
+                <div>
+                    <div style="font-size:1.1rem;color:#fff;font-weight:500;">{{ review.author }}</div>
+                    <div style="color:#e0e0e0;font-size:1rem;margin-top:0.25rem;">{{ review.text }}</div>
+                </div>
+            </div>
+        {% else %}
+            <p style="color:#fff;">No reviews yet.</p>
+        {% endfor %}
+    </div>
+</div>
+<style>
+@media (max-width: 700px) {
+    div[style*="max-width:700px"] {
+        padding: 0 8px;
+    }
+    form[aria-label="Leave a Review"] {
+        padding: 1rem !important;
+    }
+}
+</style>
+{% endblock %}
+{% endblock %}

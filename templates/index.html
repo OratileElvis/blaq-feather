@@ -1,40 +1,79 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home - Tattoo Artist{% endblock %}
 
 {% block content %}
-    <section class="hero">
-        <div class="container">
-            <h1 class="hero-title">Welcome to Blaq Feather Tattoos and Piercings Studio</h1>
-            <p class="hero-subtitle">Your journey to unique, personalized tattoos &/ piercings starts here. Let's create a design that tells your story.</p>
-            <div class="hero-buttons">
-                <a href="{{ url_for('contact') }}" class="btn-primary">Book Your Session</a>
-                <a href="#explore" class="btn-secondary">Explore My Work</a>
+<!-- Hero Slider -->
+<div class="swiper hero-slider" aria-label="Featured artwork slider" role="region">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url({{ url_for('static', filename='images/slide1.jpg') }})">
+            <div class="slide-content">
+                <h2>Welcome to Blaqfeather Tattoos and piercings</h2>
+                <p>Your journey to unique, personalized tattoos & piercings starts here. Rock your ink.</p>
             </div>
         </div>
-    </section>
-
-    <section id="explore" class="about-preview">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>BLAQfeather Tattoos was established in 2017 by the tattoo artist, Payne. Payne, having always had a deep appreciation of art, developed a fascination for art on skin, and this grew into a love of tattoos. That love is what drives BLAQfeather to provide high-quality services to all its clients.</p>
-            <a href="{{ url_for('about') }}" class="btn-secondary">Read Our Story</a>
+        <div class="swiper-slide" style="background-image: url({{ url_for('static', filename='images/slide2.jpg') }})">
+            <div class="slide-content">
+                <h2>Custom Designs</h2>
+                <p>Every tattoo tells a unique story</p>
+            </div>
         </div>
-    </section>
-
-    <section class="portfolio-preview">
-        <div class="container">
-            <h2>Our Portfolio</h2>
-            <p>Check out some of my latest work, and get inspired for your own tattoo design.</p>
-            <a href="{{ url_for('portfolio') }}" class="btn-secondary">View Portfolio</a>
+        <div class="swiper-slide" style="background-image: url({{ url_for('static', filename='images/slide3.jpg') }})">
+            <div class="slide-content">
+                <h2>Professional Artist</h2>
+                <p>Years of experience in creating beautiful tattoos</p>
+            </div>
         </div>
-    </section>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
 
-    <section class="testimonials-preview">
-        <div class="container">
-            <h2>What Our Clients Say</h2>
-            <p>Discover the experiences of people who have trusted me with their tattoos. Their stories are a testament to the passion I put into every piece.</p>
-            <a href="{{ url_for('testimonials') }}" class="btn-secondary">See Testimonials</a>
-        </div>
-    </section>
+<!-- Gallery Section -->
+<section aria-label="Gallery" role="region" style="max-width:900px;margin:40px auto;">
+    <h1 style="color:#fff;text-align:center;">Gallery</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+        {% for pic in pictures %}
+            <img src="{{ url_for('static', filename='images/gallery/' ~ pic.filename) }}" alt="Tattoo artwork by Blaqfeather" style="height:160px;border-radius:8px;max-width:100%;object-fit:cover;">
+        {% else %}
+            {# Show placeholders if no pictures #}
+            {% for _ in range(6) %}
+                <div style="height:160px;width:160px;background:#444;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#888;">
+                    No Image
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+<style>
+@media (max-width: 700px) {
+    section[aria-label="Gallery"] div {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    section[aria-label="Gallery"] img {
+        width: 100% !important;
+        height: 120px !important;
+        max-width: 350px !important;
+    }
+}
+</style>
+<script>
+    const swiper = new Swiper('.hero-slider', {
+        loop: true,
+        effect: 'fade',
+        autoplay: {
+            delay: 5000,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Edit Review{% endblock %}
+{% block content %}
+<div style="max-width:400px;margin:40px auto;">
+    <h2>Edit Review</h2>
+    <form method="post">
+        {{ csrf_token() }}
+        <input type="text" name="author" value="{{ review.author }}" required style="width:100%;margin-bottom:1rem;">
+        <input type="text" name="text" value="{{ review.text }}" required style="width:100%;margin-bottom:1rem;">
+        <button type="submit">Save</button>
+        <a href="{{ url_for('admin_dashboard') }}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -3,31 +3,33 @@
 {% block title %}Portfolio - Tattoo Artist{% endblock %}
 
 {% block content %}
-    <section class="portfolio-content">
-        <div class="container">
+    <section class="portfolio-content" aria-label="Portfolio" role="region">
+        <div class="container" style="max-width:1000px;margin:auto;">
             <h1>Portfolio</h1>
             <h2>Recent Work</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <a href="{{ url_for('static', filename='images/your-first-image.jpg') }}" target="_blank">
-                        <img src="{{ url_for('static', filename='images/your-first-image.jpg') }}" alt="Tattoo 1" style="height: 350px; object-fit: cover;">
-                    </a>
-                    <h3 style="text-align: center; color: black; font-weight: bold;">3D butterflies</h3>
-                </div>
-                <div class="portfolio-item">
-                    <a href="{{ url_for('static', filename='images/your-second-image.jpg') }}" target="_blank">
-                        <img src="{{ url_for('static', filename='images/your-second-image.jpg') }}" alt="Tattoo 2" style="height: 350px; object-fit: cover;">
-                    </a>
-                    <h3 style="text-align: center; color: black; font-weight: bold;">Ear pearcing</h3>
-                </div>
-                <div class="portfolio-item">
-                    <a href="{{ url_for('static', filename='images/your-third-image.jpg') }}" target="_blank">
-                        <img src="{{ url_for('static', filename='images/your-third-image.jpg') }}" alt="Tattoo 3" style="height: 350px; object-fit: cover;">
-                    </a>
-                    <h3 style="text-align: center; color: black; font-weight: bold;">Rose with colored patels</h3>
-                </div>
+            <div class="portfolio-grid" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+                {% for pic in pictures %}
+                    <div class="portfolio-item" style="flex:1 1 220px;max-width:300px;">
+                        <a href="{{ url_for('static', filename='images/gallery/' ~ pic.filename) }}" target="_blank">
+                            <img src="{{ url_for('static', filename='images/gallery/' ~ pic.filename) }}" alt="Tattoo artwork by Blaqfeather" style="height: 350px; object-fit: cover; width:100%; border-radius:8px;">
+                        </a>
+                    </div>
+                {% else %}
+                    <p style="color:#fff;">No portfolio images yet.</p>
+                {% endfor %}
             </div>
-            <h3 style="text-align: center; color: black; font-weight: bold; margin-top: 30px;">For more images of our work, visit our social media pages by using the links on the footer</h3>
+            <h2 style="text-align: center; color: black; font-weight: bold; margin-top: 30px;">For more images of our work, visit our social media pages by using the links on the footer</h2>
         </div>
     </section>
+    <style>
+        @media (max-width: 700px) {
+            .portfolio-grid {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+            .portfolio-item img {
+                height: 200px !important;
+            }
+        }
+    </style>
 {% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div style="max-width:800px;margin:40px auto;">
+    <h2>Admin Dashboard</h2>
+    <a href="{{ url_for('admin_logout') }}">Logout</a>
+    <hr>
+    <h3>Manage Pictures</h3>
+    <form method="post" action="{{ url_for('add_picture') }}" enctype="multipart/form-data" aria-label="Add Picture">
+        {{ csrf_token() }}
+        <label for="picture">Upload New Picture</label>
+        <input type="file" id="picture" name="picture" required>
+        <button type="submit">Add Picture</button>
+    </form>
+    <ul>
+        {% for pic in pictures %}
+        <li>
+            <img src="{{ url_for('static', filename='images/gallery/' ~ pic.filename) }}" alt="Tattoo artwork" style="height:60px;">
+            <form method="post" action="{{ url_for('delete_picture', pic_id=pic.id) }}" style="display:inline;">
+                {{ csrf_token() }}
+                <button type="submit" onclick="return confirm('Delete this picture?')">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <h3>Manage Reviews</h3>
+    <form method="post" action="{{ url_for('admin_add_review') }}" aria-label="Add Review">
+        {{ csrf_token() }}
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" placeholder="Author" required>
+        <label for="text">Review</label>
+        <input type="text" id="text" name="text" placeholder="Review" required>
+        <button type="submit">Add Review</button>
+    </form>
+    <ul>
+        {% for review in reviews %}
+        <li>
+            <strong>{{ review.author }}</strong>: {{ review.text }}
+            {% if not review.approved %}
+                <span style="color:orange;">(Pending)</span>
+                <form method="post" action="{{ url_for('approve_review', review_id=review.id) }}" style="display:inline;">
+                    {{ csrf_token() }}
+                    <button type="submit">Approve</button>
+                </form>
+            {% else %}
+                <span style="color:green;">(Approved)</span>
+            {% endif %}
+            <form method="post" action="{{ url_for('delete_review', review_id=review.id) }}" style="display:inline;">
+                {{ csrf_token() }}
+                <button type="submit" onclick="return confirm('Delete this review?')">Delete</button>
+            </form>
+            <a href="{{ url_for('edit_review', review_id=review.id) }}" style="margin-left:10px;">Edit</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <a href="{{ url_for('admin_reset_password') }}">Reset Admin Password</a>
+</div>
+{% endblock %}

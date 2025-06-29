@@ -1,21 +1,51 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact Me - Tattoo Artist{% endblock %}
+{% block title %}Contact - Tattoo Artist{% endblock %}
 
 {% block content %}
-    <section class="contact-info">
-        <div class="container">
-            <h1>Contact Me</h1>
-            <p>If you have any questions, feel free to reach out to me through the contact information below or by filling out the contact form.</p>
-
-            <h2>Email</h2>
-            <p>blaqfeather115@gmail.com</p>
-
-            <h2>Phone</h2>
-            <p>067 729 2036</p>
-
-            <h2>Location</h2>
-            <p>123 Tattoo St, Ink City, IC 98765</p>
+<section class="contact-section" style="background: linear-gradient(135deg, #232526 0%, #414345 100%); padding-top: 2.5rem; padding-bottom: 2rem;">
+    <div class="container" style="max-width: 600px; margin: 0 auto;">
+        <h1 style="text-align:center; color:#fff; margin-bottom: 2rem; letter-spacing: 1px;">Contact Us</h1>
+        <div class="modern-card" style="background:rgba(255,255,255,0.06); border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,0.10); padding:2rem; margin-bottom:0;">
+            <ul style="list-style:none; padding:0; margin:0;">
+                <li style="display:flex; align-items:center; margin-bottom:1.2rem;">
+                    <span style="font-size:1.5rem; color:#4A90E2; margin-right:1rem;">
+                        <svg width="22" height="22" fill="currentColor"><use xlink:href="#icon-mail"></use></svg>
+                    </span>
+                    <strong style="color:#fff; min-width:70px;">Email:</strong>
+                    <a href="mailto:blaqfeather115@gmail.com" style="color:#4A90E2; margin-left:0.5rem; text-decoration:underline;">blaqfeather115@gmail.com</a>
+                </li>
+                <li style="display:flex; align-items:center; margin-bottom:1.2rem;">
+                    <span style="font-size:1.5rem; color:#4A90E2; margin-right:1rem;">
+                        <svg width="22" height="22" fill="currentColor"><use xlink:href="#icon-phone"></use></svg>
+                    </span>
+                    <strong style="color:#fff; min-width:70px;">Phone:</strong>
+                    <a href="tel:+27677292036" style="color:#4A90E2; margin-left:0.5rem; text-decoration:underline;">+27 67 729 2036</a>
+                </li>
+                <li style="display:flex; align-items:center;">
+                    <span style="font-size:1.5rem; color:#4A90E2; margin-right:1rem;">
+                        <svg width="22" height="22" fill="currentColor"><use xlink:href="#icon-location"></use></svg>
+                    </span>
+                    <strong style="color:#fff; min-width:70px;">Location:</strong>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Sunnypark+Mall+ Pretoria" target="_blank" style="color:#4A90E2; margin-left:0.5rem; text-decoration:underline;">
+                        Shop 6 Sunnypark Mall, Pretoria
+                    </a>
+                </li>
+                <li style="display:flex; align-items:center; margin-top:1.2rem;">
+                
+                    <a href="https://www.google.com/maps/search/?api=1&query=7+Dyke+Street+Newpark+ Kimberley" target="_blank" style="color:#4A90E2; margin-left:0.5rem; text-decoration:underline;">
+                        7 Dyke Street Kimberley, Newpark
+                    </a>
+                </li>
+            </ul>
         </div>
-    </section>
+        <!-- Optionally, add a modern styled contact form here -->
+    </div>
+    <!-- SVG icons for mail, phone, location -->
+    <svg style="display:none;">
+        <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2v.01L12 13 4 6.01V6h16zm0 12H4V8.99l8 6.99 8-6.99V18z"/></symbol>
+        <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/></symbol>
+        <symbol id="icon-location" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></symbol>
+    </svg>
+</section>
 {% endblock %}
