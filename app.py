@@ -57,14 +57,14 @@ def init_db():
     ''')
     # --- Ensure 'approved' column exists in reviews ---
     try:
-        conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
+        # Check if 'approved' column exists
+        columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]
+        if 'approved' not in columns:
+            conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
     except Exception as e:
-        # Accept both sqlite3.OperationalError and sqlite3.DatabaseError for compatibility
-        if "duplicate column name" not in str(e):
-            # Try to detect if the error is about missing database file or other issues
-            import sys
-            print(f"Error adding 'approved' column to reviews: {e}", file=sys.stderr)
-            raise
+        import sys
+        print(f"Error ensuring 'approved' column in reviews: {e}", file=sys.stderr)
+        raise
     # Add reset_token and reset_token_expiry to admin if not exists
     conn2 = sqlite3.connect(DATABASE)
     try:
