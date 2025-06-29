@@ -41,13 +41,13 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 # --- Reviews Database Setup ---
 def get_db_connection():
-    # Use the same database file as the rest of the app to avoid migration issues
+    # Always use site.db
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
-    conn = get_db_connection()
+    conn = get_db()
     # Ensure reviews table exists
     conn.execute('''
         CREATE TABLE IF NOT EXISTS reviews (
