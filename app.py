@@ -46,16 +46,21 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
-    # Add approved column to reviews if not exists
+    # Ensure reviews table exists
     conn.execute('''
         CREATE TABLE IF NOT EXISTS reviews (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             review TEXT NOT NULL,
-            created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            approved INTEGER DEFAULT 0
+            created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    # Add 'approved' column if it does not exist
+    try:
+        conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
+    except Exception:
+        pass  # Ignore if already exists
+
     # Add reset_token and reset_token_expiry to admin if not exists
     conn2 = sqlite3.connect(DATABASE)
     try:
