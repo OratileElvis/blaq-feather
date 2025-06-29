@@ -9,18 +9,15 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import time
-import sys  # Moved import here
+import sys
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-# Use a secure secret key from environment variable
 app.secret_key = os.environ.get('SECRET_KEY', os.urandom(32))
 
-# CSRF Protection
 csrf = CSRFProtect(app)
 
-# Email configuration (Gmail SMTP setup)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -29,7 +26,6 @@ app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 
-# Initialize Flask-Mail
 mail = Mail(app)
 
 DATABASE = os.path.join(app.root_path, 'site.db')
@@ -39,16 +35,27 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-# --- Reviews Database Setup ---
+# ✅ Ensure get_db is defined BEFORE it is used
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
+    return db
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
 def get_db_connection():
-    # Always use site.db
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
     conn = get_db()
-    # Ensure reviews table exists
     conn.execute('''
         CREATE TABLE IF NOT EXISTS reviews (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +64,6 @@ def init_db():
             created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    # --- Ensure 'approved' column exists in reviews ---
     try:
         columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]
         if 'approved' not in columns:
@@ -66,7 +72,7 @@ def init_db():
     except Exception as e:
         print(f"Error ensuring 'approved' column in reviews: {e}", file=sys.stderr)
         raise
-    # Add reset_token and reset_token_expiry to admin if not exists
+
     conn2 = sqlite3.connect(DATABASE)
     try:
         conn2.execute('ALTER TABLE admin ADD COLUMN reset_token TEXT')
@@ -88,20 +94,6 @@ def debug_print_review_columns():
     conn.close()
 
 debug_print_review_columns()
-# --- End Reviews Database Setup ---
-
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-        db.row_factory = sqlite3.Row
-    return db
-
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -114,7 +106,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Store failed attempts in memory (for production, use a persistent store)
 FAILED_LOGINS = {}
 
 def is_locked_out(ip):
@@ -130,7 +121,6 @@ def is_locked_out(ip):
 
 @app.before_request
 def enforce_https_in_production():
-    # Only redirect if not in debug mode, not on localhost, and not already HTTPS
     host = request.host.split(':')[0]
     if (
         not app.debug
@@ -148,30 +138,27 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')  # About page
+    return render_template('about.html')
 
 @app.route('/portfolio')
 def portfolio():
     db = get_db()
     pictures = db.execute('SELECT * FROM pictures').fetchall()
-    return render_template('portfolio.html', pictures=pictures)  # Portfolio page
+    return render_template('portfolio.html', pictures=pictures)
 
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
     if request.method == 'POST':
-        # Collect form data
         name = request.form['name']
         phone = request.form['phone']
         date = request.form['date']
         message = request.form.get('message', '')
-        
-        # Create the email message
+
         msg = Message(
             'New Tattoo Booking Request',
             recipients=['blaqfeather115@gmail.com']
         )
-        
-        # Email body content
+
         msg.body = f"""
         You have a new booking request:
 
@@ -180,7 +167,7 @@ def booking():
         Preferred Date: {date}
         Message: {message}
         """
-        
+
         try:
             mail.send(msg)
             flash('Booking request submitted! We will contact you soon.', 'success')
@@ -194,22 +181,19 @@ def booking():
 
 @app.route('/thank-you')
 def thank_you():
-    return render_template('thank-you.html')  # Thank you page after form submission
+    return render_template('thank-you.html')
 
 @app.route('/reviews')
 def reviews():
     db = get_db()
-    # Only show approved reviews to the public
     reviews = db.execute('SELECT * FROM reviews WHERE approved=1').fetchall()
     return render_template('reviews.html', reviews=reviews)
 
-# Allow clients to submit reviews
 @app.route('/reviews/add', methods=['POST'])
 def add_client_review():
     author = request.form['author']
     text = request.form['text']
     db = get_db()
-    # All new reviews are unapproved by default
     db.execute('INSERT INTO reviews (author, text, approved) VALUES (?, ?, 0)', (author, text))
     db.commit()
     flash('Review submitted! Awaiting approval.', 'success')
@@ -221,7 +205,7 @@ def testimonials():
 
 @app.route('/contact')
 def contact():
-    return render_template('contact.html')  # Contact page
+    return render_template('contact.html')
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -239,7 +223,6 @@ def admin_login():
             FAILED_LOGINS.pop(ip, None)
             return redirect(url_for('admin_dashboard'))
         else:
-            # Increment failed attempts
             attempts, last_attempt = FAILED_LOGINS.get(ip, (0, datetime.now()))
             FAILED_LOGINS[ip] = (attempts + 1, datetime.now())
             flash('Invalid credentials')
@@ -257,11 +240,10 @@ def admin_reset_password():
         email = request.form['email']
         db = get_db()
         user = db.execute('SELECT * FROM admin WHERE username=?', (email,)).fetchone()
-        # Always show generic message to prevent user enumeration
         if user:
             import secrets
             token = secrets.token_urlsafe(32)
-            expiry = int(time.time()) + 3600  # 1 hour from now
+            expiry = int(time.time()) + 3600
             db.execute('UPDATE admin SET reset_token=?, reset_token_expiry=? WHERE username=?', (token, expiry, email))
             db.commit()
             reset_url = url_for('admin_reset_with_token', token=token, _external=True)
@@ -270,7 +252,7 @@ def admin_reset_password():
             try:
                 mail.send(msg)
             except Exception:
-                pass  # Do not reveal email status
+                pass
         flash('If this email exists, a reset link has been sent.', 'success')
         return redirect(url_for('admin_login'))
     return render_template('admin_reset_password.html')
@@ -279,13 +261,11 @@ def admin_reset_password():
 def admin_reset_with_token(token):
     db = get_db()
     user = db.execute('SELECT * FROM admin WHERE reset_token=?', (token,)).fetchone()
-    # Check token and expiry
     if not user or not user['reset_token_expiry'] or int(user['reset_token_expiry']) < int(time.time()):
         flash('Invalid or expired reset token.', 'error')
         return redirect(url_for('admin_login'))
     if request.method == 'POST':
         new_password = request.form['password']
-        # Enforce minimum password length
         if len(new_password) < 8:
             flash('Password must be at least 8 characters long.', 'error')
             return render_template('admin_set_new_password.html', token=token)
@@ -301,7 +281,6 @@ def admin_reset_with_token(token):
 def admin_dashboard():
     db = get_db()
     pictures = db.execute('SELECT * FROM pictures').fetchall()
-    # Admin sees all reviews, including unapproved
     reviews = db.execute('SELECT * FROM reviews').fetchall()
     return render_template('admin_dashboard.html', pictures=pictures, reviews=reviews)
 
@@ -342,7 +321,6 @@ def admin_add_review():
     author = request.form['author']
     text = request.form['text']
     db = get_db()
-    # All new reviews added by admin are approved by default
     db.execute('INSERT INTO reviews (author, text, approved) VALUES (?, ?, 1)', (author, text))
     db.commit()
     flash('Review added!', 'success')
@@ -381,5 +359,4 @@ def edit_review(review_id):
     return render_template('edit_review.html', review=review)
 
 if __name__ == "__main__":
-    app.run(debug=True)
     app.run(debug=True)
