@@ -40,7 +40,8 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 # --- Reviews Database Setup ---
 def get_db_connection():
-    conn = sqlite3.connect('reviews.db')
+    # Use the same database file as the rest of the app to avoid migration issues
+    conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -57,10 +58,10 @@ def init_db():
     ''')
     # --- Ensure 'approved' column exists in reviews ---
     try:
-        # Check if 'approved' column exists
         columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]
         if 'approved' not in columns:
             conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
+            conn.commit()
     except Exception as e:
         import sys
         print(f"Error ensuring 'approved' column in reviews: {e}", file=sys.stderr)
@@ -75,15 +76,13 @@ def init_db():
         conn2.execute('ALTER TABLE admin ADD COLUMN reset_token_expiry INTEGER')
     except Exception:
         pass
-    conn.commit()
     conn.close()
-    conn2.commit()
     conn2.close()
 
 init_db()
 
 def debug_print_review_columns():
-    conn = get_db_connection()
+    conn = get_db()
     columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]
     print("Reviews table columns:", columns)
     conn.close()
@@ -382,4 +381,5 @@ def edit_review(review_id):
     return render_template('edit_review.html', review=review)
 
 if __name__ == "__main__":
+    app.run(debug=True)
     app.run(debug=True)
