@@ -341,63 +341,42 @@ def delete_picture(pic_id):
 @login_required
 def admin_add_review():
     author = request.form['author']
-    text = request.form['text']est.form['text']
+    text = request.form['text']
     db = get_db()
-    # All new reviews are unapproved by defaultNSERT INTO reviews (author, text) VALUES (?, ?)', (author, text))
-    db.execute('INSERT INTO reviews (author, text, approved) VALUES (?, ?, 0)', (author, text))
-    db.commit()ew added!', 'success')
-    flash('Review submitted! Awaiting approval.', 'success')board'))
+    # All new reviews added by admin are approved by default
+    db.execute('INSERT INTO reviews (author, text, approved) VALUES (?, ?, 1)', (author, text))
+    db.commit()
+    flash('Review added!', 'success')
     return redirect(url_for('admin_dashboard'))
+
 @app.route('/admin/reviews/delete/<int:review_id>', methods=['POST'])
-@app.route('/admin/reviews/delete/<int:review_id>', methods=['POST'])
-@login_requiredew(review_id):
+@login_required
 def delete_review(review_id):
-    db = get_db()ELETE FROM reviews WHERE id=?', (review_id,))
+    db = get_db()
     db.execute('DELETE FROM reviews WHERE id=?', (review_id,))
-    db.commit()ew deleted.', 'success')
-    flash('Review deleted.', 'success')oard'))
+    db.commit()
+    flash('Review deleted.', 'success')
     return redirect(url_for('admin_dashboard'))
+
 @app.route('/admin/reviews/approve/<int:review_id>', methods=['POST'])
-@app.route('/admin/reviews/approve/<int:review_id>', methods=['POST'])
-@login_requirediew(review_id):
+@login_required
 def approve_review(review_id):
-    db = get_db()PDATE reviews SET approved=1 WHERE id=?', (review_id,))
+    db = get_db()
     db.execute('UPDATE reviews SET approved=1 WHERE id=?', (review_id,))
-    db.commit())
-    flash('Review approved.', 'success')dashboard'))
+    db.commit()
+    flash('Review approved.', 'success')
     return redirect(url_for('admin_dashboard'))
-reviews/edit/<int:review_id>', methods=['GET', 'POST'])
+
 @app.route('/admin/reviews/edit/<int:review_id>', methods=['GET', 'POST'])
 @login_required
 def edit_review(review_id):
     db = get_db()
-    if request.method == 'POST':        author = request.form['author']
-        author = request.form['author']m['text']
-        text = request.form['text']ATE reviews SET author=?, text=? WHERE id=?', (author, text, review_id))
-        db.execute('UPDATE reviews SET author=?, text=? WHERE id=?', (author, text, review_id))        db.commit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    app.run(debug=True)if __name__ == "__main__":force_add_approved_column()    conn.close()        print("'approved' column already exists in reviews table.")    else:        print("Added 'approved' column to reviews table.")        conn.commit()        conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')    if 'approved' not in columns:    columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]    conn = sqlite3.connect('reviews.db')def force_add_approved_column():    return render_template('edit_review.html', review=review)    review = db.execute('SELECT * FROM reviews WHERE id=?', (review_id,)).fetchone()        return redirect(url_for('admin_dashboard'))        flash('Review updated!', 'success')        db.commit()        flash('Review updated!', 'success')
+    if request.method == 'POST':
+        author = request.form['author']
+        text = request.form['text']
+        db.execute('UPDATE reviews SET author=?, text=? WHERE id=?', (author, text, review_id))
+        db.commit()
+        flash('Review updated!', 'success')
         return redirect(url_for('admin_dashboard'))
     review = db.execute('SELECT * FROM reviews WHERE id=?', (review_id,)).fetchone()
     return render_template('edit_review.html', review=review)
