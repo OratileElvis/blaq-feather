@@ -55,12 +55,12 @@ def init_db():
             created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    # Add 'approved' column if it does not exist
+    # --- Ensure 'approved' column exists in reviews ---
     try:
         conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
-    except Exception:
-        pass  # Ignore if already exists
-
+    except sqlite3.OperationalError as e:
+        if "duplicate column name" not in str(e):
+            raise
     # Add reset_token and reset_token_expiry to admin if not exists
     conn2 = sqlite3.connect(DATABASE)
     try:
@@ -188,6 +188,7 @@ def thank_you():
 @app.route('/reviews')
 def reviews():
     db = get_db()
+    # Only show approved reviews to the public
     reviews = db.execute('SELECT * FROM reviews WHERE approved=1').fetchall()
     return render_template('reviews.html', reviews=reviews)
 
@@ -197,6 +198,7 @@ def add_client_review():
     author = request.form['author']
     text = request.form['text']
     db = get_db()
+    # All new reviews are unapproved by default
     db.execute('INSERT INTO reviews (author, text, approved) VALUES (?, ?, 0)', (author, text))
     db.commit()
     flash('Review submitted! Awaiting approval.', 'success')
@@ -288,7 +290,8 @@ def admin_reset_with_token(token):
 def admin_dashboard():
     db = get_db()
     pictures = db.execute('SELECT * FROM pictures').fetchall()
-    reviews = db.execute('SELECT * FROM reviews').fetchall()  # Show all reviews to admin
+    # Admin sees all reviews, including unapproved
+    reviews = db.execute('SELECT * FROM reviews').fetchall()
     return render_template('admin_dashboard.html', pictures=pictures, reviews=reviews)
 
 @app.route('/admin/pictures/add', methods=['POST'])

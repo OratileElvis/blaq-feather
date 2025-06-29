@@ -9,7 +9,7 @@
             <p class="booking-subtitle">Start your tattoo journey with us</p>
             
             <form method="POST" class="modern-form">
-                {{ csrf_token() }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
