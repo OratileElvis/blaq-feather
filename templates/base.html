@@ -144,11 +144,11 @@
         <img src="{{ url_for('static', filename='images/logo.png') }}?v=2" alt="Blaqfeather Tattoos Logo" class="logo">
         <button class="menu-toggle" aria-label="Open navigation" onclick="document.querySelector('nav ul').classList.toggle('show')">&#9776;</button>
         <ul>
-            <li class="{% if request.endpoint == 'home' %}active{% endif %}"><a href="{{ url_for('home') }}">Home</a></li>
-            <li class="{% if request.endpoint == 'about' %}active{% endif %}"><a href="{{ url_for('about') }}">About</a></li>
-            <li class="{% if request.endpoint == 'booking' %}active{% endif %}"><a href="{{ url_for('booking') }}">Book</a></li>
-            <li class="{% if request.endpoint == 'reviews' %}active{% endif %}"><a href="{{ url_for('reviews') }}">Reviews</a></li>
-            <li class="{% if request.endpoint == 'contact' %}active{% endif %}"><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li class="{% if request.endpoint == 'home' %}active{% endif %}"><a href="{{ url_for('home') }}" onclick="closeMenuOnMobile(event)">Home</a></li>
+            <li class="{% if request.endpoint == 'about' %}active{% endif %}"><a href="{{ url_for('about') }}" onclick="closeMenuOnMobile(event)">About</a></li>
+            <li class="{% if request.endpoint == 'booking' %}active{% endif %}"><a href="{{ url_for('booking') }}" onclick="closeMenuOnMobile(event)">Book</a></li>
+            <li class="{% if request.endpoint == 'reviews' %}active{% endif %}"><a href="{{ url_for('reviews') }}" onclick="closeMenuOnMobile(event)">Reviews</a></li>
+            <li class="{% if request.endpoint == 'contact' %}active{% endif %}"><a href="{{ url_for('contact') }}" onclick="closeMenuOnMobile(event)">Contact</a></li>
         </ul>
     </nav>
 
@@ -239,6 +239,12 @@
                 }
             }
         });
+        function closeMenuOnMobile(event) {
+            // Only close menu on mobile
+            if (window.innerWidth <= 700) {
+                document.querySelector('nav ul').classList.remove('show');
+            }
+        }
     </script>
 </body>
 </html>
