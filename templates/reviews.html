@@ -29,16 +29,16 @@
             <p style="color:#fff;">No reviews yet.</p>
         {% endfor %}
     </div>
+    <style>
+    @media (max-width: 700px) {
+        div[style*="max-width:700px"] {
+            padding: 0 8px;
+        }
+        form[aria-label="Leave a Review"] {
+            padding: 1rem !important;
+        }
+    }
+    </style>
 </div>
 {% endblock %}
-@media (max-width: 700px) {
-    div[style*="max-width:700px"] {
-        padding: 0 8px;
-    }
-    form[aria-label="Leave a Review"] {
-        padding: 1rem !important;
-    }
-}
-</style>
-{% endblock %}
-{% endblock %}
+
