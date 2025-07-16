@@ -86,10 +86,23 @@ def debug_print_review_columns():
     print("Reviews table columns:", columns)
     conn.close()
 
+def force_add_approved_column():
+    conn = sqlite3.connect(DATABASE)
+    columns = [row[1] for row in conn.execute("PRAGMA table_info(reviews)")]
+    if 'approved' not in columns:
+        conn.execute('ALTER TABLE reviews ADD COLUMN approved INTEGER DEFAULT 0')
+        conn.commit()
+        print("Added 'approved' column to reviews table.", file=sys.stderr)
+    else:
+        print("'approved' column already exists in reviews table.", file=sys.stderr)
+    print("Reviews table columns:", columns, file=sys.stderr)
+    conn.close()
+
 # Call init only when app starts
 with app.app_context():
     init_db()
     debug_print_review_columns()
+    force_add_approved_column()
 
 # --- Helpers ---
 def allowed_file(filename):
